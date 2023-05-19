@@ -52,8 +52,10 @@ for j in lines:
     t2 = j.split()
     ins.append(t2)
 labels = []
+lab_index=[]
 for i in ins:
     if i[0][-1] == ":":
+        lab_index.append(ins.index(i))
         labels.append(i[0][:-1])
         i = i.pop(0)
 for i in insori:
@@ -125,7 +127,8 @@ for i in insori[:-1]:
 lab_address = {}
 for i in range(len(labels)):
     key = labels[i]
-    value = convert_binary(i + count1)
+    p = lab_index[i]
+    value = convert_binary(p - count1)
     lab_address[key] = value
 for i in insori[:-1]:
         if i[0] in types['A']:
