@@ -118,7 +118,6 @@ for i in range(len(labels)):
     key = labels[i]
     value = convert_binary(i + count1)
     lab_address[key] = value
-print(lab_address)
 for i in insori[:-1]:
         if i[0] in types['A']:
                 if (len(i) != 4):
