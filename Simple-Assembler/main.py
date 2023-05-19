@@ -31,7 +31,15 @@ opcodes = {
     'mov2': '00011',
 }
 numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-f = open("input", "r")
+fmz = open("input.txt","w")
+while True:
+    try:
+        liness = input()
+        fmz.writelines(liness+"\n")
+    except EOFError:
+        break
+fmz.close()
+f = open("input.txt", "r")
 instructions = (f.readlines())
 errors = open("error.txt","w")
 lines = [i.strip() for i in instructions]
@@ -96,9 +104,10 @@ for i in range(len(binaryins)):
     if (binaryins[i] != []):
         break
 
+mem_address= len(binaryins)-count1
 variables = {}
-for i in range(1, count1 + 1):
-    b = index_empty[i - 1]
+for i in range(mem_address,mem_address+count1):
+    b = index_empty[i-mem_address]
     a = ins[b][1]
     key = a
     value = convert_binary(i)
@@ -118,7 +127,6 @@ for i in range(len(labels)):
     key = labels[i]
     value = convert_binary(i + count1)
     lab_address[key] = value
-print(lab_address)
 for i in insori[:-1]:
         if i[0] in types['A']:
                 if (len(i) != 4):
@@ -189,5 +197,9 @@ for i in binaryins:
         lst.append(i[0] + '0' + i[1] + i[2])
 f2 = open("output", "w")
 for i in lst:
-    f2.write(i)
-    f2.write("\n")
+    f2.write(i+"\n")
+f2.close()
+fk = open("output","r")
+for lineyss in fk:
+    print(lineyss,end="")
+fk.close()
