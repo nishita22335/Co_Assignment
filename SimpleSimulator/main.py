@@ -25,7 +25,7 @@ opcodes ={
     'mov2': '00011',
 }
 types = {'A':['add','sub','mul','xor','or','and',],'B':['mov1','rs','ls'],'C':['mov2','div','not','cmp'],'D':['ld','st'],'E':['jmp','jlt','jgt','je'],'F':['hlt']}
-reg_values={'R0': 0, 'R1': 0, 'R2': 0, 'R3': 0, 'R4': 0, 'R5': 0, 'R6': 0,'FLAGS':'0000000'}
+reg_values={'R0': 0, 'R1': 0, 'R2': 0, 'R3': 0, 'R4': 0, 'R5': 0, 'R6': 0,'FLAGS':'0000000000000000'}
 input_memory=[]
 while len(input_memory)<128:
     input_memory.append('0'*16)
