@@ -101,7 +101,7 @@ for j in range(len(input)):
         # mem_add.append(input[j][9:16])
     if keys[j] == 'F':
         ins.append([fir_ele[j]])
-print(ins)
+# print(ins)
 # ins list contain all the instructions as per the assembly language.
 i = 0
 while (i<len(ins)):
@@ -118,6 +118,10 @@ while (i<len(ins)):
             print(f"{decimal_to_binary(i)[-7:]}        {decimal_to_binary(reg_values['R0'])} {decimal_to_binary(reg_values['R1'])} {decimal_to_binary(reg_values['R2'])} {decimal_to_binary(reg_values['R3'])} {decimal_to_binary(reg_values['R4'])} {decimal_to_binary(reg_values['R5'])} {decimal_to_binary(reg_values['R6'])} {reg_values['FLAGS']}")
             if i < k:
                 i = k
+        else:
+            print(f"{decimal_to_binary(i)[-7:]}        {decimal_to_binary(reg_values['R0'])} {decimal_to_binary(reg_values['R1'])} {decimal_to_binary(reg_values['R2'])} {decimal_to_binary(reg_values['R3'])} {decimal_to_binary(reg_values['R4'])} {decimal_to_binary(reg_values['R5'])} {decimal_to_binary(reg_values['R6'])} {reg_values['FLAGS']}")
+            i = i+1
+
                 # continue
     elif ins[i][0]=='jlt':
         if reg_values['FLAGS'] == '0000000000000100':
@@ -127,6 +131,9 @@ while (i<len(ins)):
             if i < k:
                 i = k
                 # continue
+        else:
+            print(f"{decimal_to_binary(i)[-7:]}        {decimal_to_binary(reg_values['R0'])} {decimal_to_binary(reg_values['R1'])} {decimal_to_binary(reg_values['R2'])} {decimal_to_binary(reg_values['R3'])} {decimal_to_binary(reg_values['R4'])} {decimal_to_binary(reg_values['R5'])} {decimal_to_binary(reg_values['R6'])} {reg_values['FLAGS']}")
+            i = i+1
 
     elif ins[i][0]=='je':
         if reg_values['FLAGS']=='0000000000000001':
@@ -136,11 +143,14 @@ while (i<len(ins)):
             if i < k:
                 i = k
                 # continue
+        else:
+            print(f"{decimal_to_binary(i)[-7:]}        {decimal_to_binary(reg_values['R0'])} {decimal_to_binary(reg_values['R1'])} {decimal_to_binary(reg_values['R2'])} {decimal_to_binary(reg_values['R3'])} {decimal_to_binary(reg_values['R4'])} {decimal_to_binary(reg_values['R5'])} {decimal_to_binary(reg_values['R6'])} {reg_values['FLAGS']}")
+            i = i+1
 
 
     elif ins[i][0]=='add':
         reg_values[ins[i][1]]=reg_values[ins[i][2]]+reg_values[ins[i][3]]
-        if reg_values[ins[i][1]]>=128:
+        if reg_values[ins[i][1]]>65535:
             reg_values[ins[i][1]]=0
             reg_values['FLAGS'] = '0000000000001000'
         else:
@@ -167,7 +177,7 @@ while (i<len(ins)):
         i = i + 1
     elif ins[i][0]=='mov1':
         reg_values[ins[i][1]]=ins[i][2]
-        if reg_values[ins[i][1]]>=128:
+        if reg_values[ins[i][1]]>65535:
             reg_values[ins[i][1]]=0
             reg_values['FLAGS'] = '0000000000001000'
         else:
@@ -185,7 +195,7 @@ while (i<len(ins)):
         i = i + 1
     elif ins[i][0]=='ld':
         reg_values[ins[i][1]]=ins[i][2]
-        if reg_values[ins[i][1]]>=128:
+        if reg_values[ins[i][1]]>65535:
             reg_values[ins[i][1]]=0
             reg_values['FLAGS'] = '0000000000001000'
         else:
@@ -200,6 +210,8 @@ while (i<len(ins)):
     elif ins[i][0]=='div':
         if reg_values[ins[i][2]]==0:
             reg_values['FLAGS'] = '0000000000001000'
+            reg_values['R0'] = 0
+            reg_values['R1'] = 0
         else:
             reg_values['R0']=reg_values[ins[i][1]]//reg_values[ins[i][2]]
             reg_values['R1'] = reg_values[ins[i][1]] % reg_values[ins[i][2]]
@@ -209,7 +221,7 @@ while (i<len(ins)):
         i = i+1
     elif ins[i][0]=='rs':
         reg_values[ins[i][1]]+=ins[i][2]
-        if reg_values[ins[i][1]]>=128:
+        if reg_values[ins[i][1]]>65535:
             reg_values[ins[i][1]]=0
             reg_values['FLAGS'] = '0000000000001000'
         else:
@@ -227,7 +239,7 @@ while (i<len(ins)):
         i = i + 1
     elif ins[i][0]=='xor':
         reg_values[ins[i][1]] = reg_values[ins[i][2]] ^ reg_values[ins[i][3]]
-        if reg_values[ins[i][1]] >= 128:
+        if reg_values[ins[i][1]] > 65535:
             reg_values[ins[i][1]] = 0
             reg_values['FLAGS'] = '0000000000001000'
         else:
@@ -236,7 +248,7 @@ while (i<len(ins)):
         i = i + 1
     elif ins[i][0]=='or':
         reg_values[ins[i][1]] = reg_values[ins[i][2]] | reg_values[ins[i][3]]
-        if reg_values[ins[i][1]] >= 128:
+        if reg_values[ins[i][1]] > 65535:
             reg_values[ins[i][1]] = 0
             reg_values['FLAGS'] = '0000000000001000'
         else:
@@ -245,7 +257,7 @@ while (i<len(ins)):
         i = i + 1
     elif ins[i][0]=='and':
         reg_values[ins[i][1]] = reg_values[ins[i][2]] & reg_values[ins[i][3]]
-        if reg_values[ins[i][1]] >= 128:
+        if reg_values[ins[i][1]] > 65535:
             reg_values[ins[i][1]] = 0
             reg_values['FLAGS'] = '0000000000001000'
         else:
@@ -253,11 +265,16 @@ while (i<len(ins)):
         print(f"{decimal_to_binary(i)[-7:]}        {decimal_to_binary(reg_values['R0'])} {decimal_to_binary(reg_values['R1'])} {decimal_to_binary(reg_values['R2'])} {decimal_to_binary(reg_values['R3'])} {decimal_to_binary(reg_values['R4'])} {decimal_to_binary(reg_values['R5'])} {decimal_to_binary(reg_values['R6'])} {reg_values['FLAGS']}")
         i = i + 1
     elif ins[i][0]=='not':
-        reg_values[ins[i][1]] = ~reg_values[ins[i][2]]
-        if reg_values[ins[i][1]] >= 128:
+        r2_value=decimal_to_binary(reg_values[ins[i][2]])
+        result_int = ''.join('1' if bit == '0' else '0' for bit in r2_value)
+        # print(result_int)
+        k= int(result_int)
+        reg_values[ins[i][1]]=(binary_To_Decimal(k))
+        # print(reg_values[ins[i][1]])
+        if reg_values[ins[i][1]] > 65535:
             reg_values[ins[i][1]] = 0
             reg_values['FLAGS'] = '0000000000001000'
-        elif reg_values[ins[i][1]]<=0:
+        if reg_values[ins[i][1]]<0:
             reg_values[ins[i][1]]=0
             reg_values['FLAGS'] = '0000000000000100'
         else:
